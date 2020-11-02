@@ -32,5 +32,11 @@ class Board:
                     return "valid"
             return "draw"
 
+    def get_name(self):
+        return self.name
+
+    def get_board(self):
+        return self.board
+
     def __str__(self):
         return "|".join(self.board[0]) + "\n" + "|".join(self.board[1]) + "\n" + "|".join(self.board[2])
