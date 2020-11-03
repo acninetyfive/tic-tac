@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from engine import Game
+from simple_engine import SimpleGame
 from player import Player, RandomComputer
 
 
@@ -24,7 +24,7 @@ p1 = GUIHuman("Gabe", "X", window)
 p2 = RandomComputer("Computer", "O")
 
 players = [p1, p2]
-game = Game(players, True)
+game = SimpleGame(players, True)
 
 while True:
     curr_move, curr_mark = game.take_turn()

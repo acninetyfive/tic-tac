@@ -1,4 +1,4 @@
-class Board:
+class TicTacBoard:
 
     def __init__(self, name: str = "Tic-Tac-Toe"):
         self.name = name

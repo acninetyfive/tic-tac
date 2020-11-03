@@ -1,12 +1,12 @@
-from tic_tac_board import Board
+from tic_tac_board import TicTacBoard
 from player import CommandLineHuman, RandomComputer
 
 
-class Game:
+class SimpleGame:
     def __init__(self, players, verbose=True, name="Tic-Tac-Toe"):
         self.players = players
         self.verbose = verbose
-        self.board = Board(name)
+        self.board = TicTacBoard(name)
         self.active_player = 0
         self.move_counter = 0
         self.result = None
@@ -66,6 +66,7 @@ if __name__ == '__main__':
     a = RandomComputer("Computer_X", "X")
     b = RandomComputer("Computer_O", "O")
 
-    game = Game([a, b])
+    game = SimpleGame([a, b])
+
     while game.get_result() is None:
         game.take_turn()
