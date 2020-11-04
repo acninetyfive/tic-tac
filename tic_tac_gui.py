@@ -2,19 +2,6 @@ import PySimpleGUI as sg
 from simple_engine import SimpleGame
 from player import Player, RandomComputer, GUIHuman
 
-'''
-class GUIHuman(Player):
-    def __init__(self, name, mark, gui):
-        super().__init__(name, mark)
-        self.gui = gui
-
-    def get_move(self):
-        event, values = self.gui.read()
-        if event in (sg.WIN_CLOSED, 'Exit'):
-            return None
-        return event
-'''
-
 if __name__ == '__main__':
 
     layout = [[sg.Button('', size=(8, 4), key=(i, j), pad=(1, 1)) for j in range(3)] for i in range(3)]

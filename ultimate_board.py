@@ -32,35 +32,7 @@ class UltimateBoard:
             if global_move == mark:
                 self.status = mark
                 return mark
-        '''
-        if move == mark:
-            gb = self.get_local_board_statuses()
-            for i in range(3):
-                print(gb[i])
-            # input()
-            # check column win
-            if self.global_board[(current_board_x - 1) % 3][current_board_y].get_status() == mark and \
-                    self.global_board[(current_board_x + 1) % 3][current_board_y] == mark:
-                self.status = mark
-                return mark
-            # check row win
-            if self.global_board[current_board_x][(current_board_y - 1 % 3)] == mark and \
-                    self.global_board[current_board_x][(current_board_y + 1) % 3] == mark:
-                self.status = mark
-                return mark
-            # check diagonal win
-            if current_board_x == current_board_y:
-                if self.global_board[(current_board_x - 1) % 3][(current_board_y - 1) % 3] == mark and \
-                        self.global_board[(current_board_x + 1) % 3][(current_board_y + 1) % 3] == mark:
-                    self.status = mark
-                    return mark
-            # check anti-diagonal win:
-            if current_board_x + current_board_y == 2:
-                if self.global_board[(current_board_x - 1) % 3][(current_board_y + 1) % 3] == mark and \
-                        self.global_board[(current_board_x + 1) % 3][(current_board_y - 1) % 3] == mark:
-                    self.status = mark
-                    return mark
-        '''
+
         for i in range(3):
             for j in range(3):
                 if self.global_board[i][j].get_status() is None:
