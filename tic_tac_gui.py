@@ -1,42 +1,31 @@
 import PySimpleGUI as sg
-from engine import Game
-from player import Player, RandomComputer
+from simple_engine import SimpleGame
+from player import Player, RandomComputer, GUIHuman
 
+if __name__ == '__main__':
 
-class GUIHuman(Player):
-    def __init__(self, name, mark, gui):
-        super().__init__(name, mark)
-        self.gui = gui
+    layout = [[sg.Button('', size=(8, 4), key=(i, j), pad=(1, 1)) for j in range(3)] for i in range(3)]
 
-    def get_move(self):
-        event, values = self.gui.read()
-        if event in (sg.WIN_CLOSED, 'Exit'):
-            return None
-        return event
+    game_name = "Tic-Tac-Toe"
+    window = sg.Window(game_name, layout, background_color="BLACK")
 
+    p1 = GUIHuman("Gabe", "X", window)
+    p2 = RandomComputer("Computer", "O")
 
-layout = [[sg.Button('', size=(8, 4), key=(i, j), pad=(1, 1)) for j in range(3)] for i in range(3)]
+    players = [p1, p2]
+    game = SimpleGame(players, True)
 
-game_name = "Tic-Tac-Toe"
-window = sg.Window(game_name, layout, background_color="BLACK")
+    while True:
+        curr_move, curr_mark = game.take_turn()
 
-p1 = GUIHuman("Gabe", "X", window)
-p2 = RandomComputer("Computer", "O")
+        window[curr_move].update(game.get_board().get_board()[curr_move[0]][curr_move[1]], button_color=('black', 'white'))
 
-players = [p1, p2]
-game = Game(players, True)
+        if game.get_result() is not None:
+            break
 
-while True:
-    curr_move, curr_mark = game.take_turn()
+    while True:
+        e, v = window.read()
+        if e in (sg.WIN_CLOSED, 'Exit'):
+            break
 
-    window[curr_move].update(game.get_board().get_board()[curr_move[0]][curr_move[1]], button_color=('black', 'white'))
-
-    if game.get_result() is not None:
-        break
-
-while True:
-    e, v = window.read()
-    if e in (sg.WIN_CLOSED, 'Exit'):
-        break
-
-window.close()
+    window.close()

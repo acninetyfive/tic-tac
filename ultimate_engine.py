@@ -1,12 +1,12 @@
-from tic_tac_board import Board
+from ultimate_board import UltimateBoard
 from player import CommandLineHuman, RandomComputer
 
 
-class Game:
+class UltimateGame:
     def __init__(self, players, verbose=True, name="Tic-Tac-Toe"):
         self.players = players
         self.verbose = verbose
-        self.board = Board(name)
+        self.board = UltimateBoard(name)
         self.active_player = 0
         self.move_counter = 0
         self.result = None
@@ -17,12 +17,15 @@ class Game:
 
     def take_turn(self):
         move = self.players[self.active_player].get_move()
-        status = self.board.move_and_check(move[0], move[1], self.players[self.active_player].get_mark())
+        status = self.board.move_and_check(move[0], move[1], move[2],
+                                           self.players[self.active_player].get_mark())
         while status == "invalid":
             if self.verbose:
-                print("Invalid move")
+                pass
+                # print("Invalid move")
             move = self.players[self.active_player].get_move()
-            status = self.board.move_and_check(move[0], move[1], self.players[self.active_player].get_mark())
+            status = self.board.move_and_check(move[0], move[1], move[2],
+                                               self.players[self.active_player].get_mark())
 
         if status != "valid":
             self.result = status
@@ -42,9 +45,10 @@ class Game:
         elif status == "valid":
             pass
 
+        just_played = self.active_player
         self.active_player = (self.active_player + 1) % 2
 
-        return move, self.players[self.active_player].get_mark()
+        return move, self.players[just_played].get_mark()
 
     def get_board(self):
         return self.board
@@ -63,9 +67,10 @@ class Game:
 
 
 if __name__ == '__main__':
-    a = RandomComputer("Computer_X", "X")
-    b = RandomComputer("Computer_O", "O")
+    a = RandomComputer("Computer_X", "X", "ultimate")
+    b = RandomComputer("Computer_O", "O", "ultimate")
 
-    game = Game([a, b])
+    game = UltimateGame([a, b])
+
     while game.get_result() is None:
-        game.take_turn()
+        turn = game.take_turn()
