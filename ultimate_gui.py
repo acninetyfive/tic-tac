@@ -14,8 +14,9 @@ if __name__ == "__main__":
     game_name = "Ultimate Tic-Tac-Toe"
     window = sg.Window(game_name, layout, background_color="BLACK")
 
-    # p1 = GUIHuman("Gabe", "X", window)
-    p1 = RandomComputer("Computer1", "X", "ultimate")
+    p1 = GUIHuman("Gabe", "X", window)
+    # p1 = RandomComputer("Computer1", "X", "ultimate")
+    # p2 = GUIHuman("Shannon", "O", window)
     p2 = RandomComputer("Computer", "O", "ultimate")
 
     color_dict = {"X": "red", "O": "green"}

@@ -20,12 +20,16 @@ class UltimateBoard:
             return "invalid"
         elif self.global_board[current_board_x][current_board_y].get_status() is not None:
             return "invalid"
+
+        move = self.global_board[current_board_x][current_board_y].move_and_check(x, y, mark)
+
+        if move == "invalid":
+            return "invalid"
+
+        if self.global_board[x][y].get_status() is None:
+            self.active_local_board = (x, y)
         else:
-            move = self.global_board[current_board_x][current_board_y].move_and_check(x, y, mark)
-            if self.global_board[x][y].get_status() is None:
-                self.active_local_board = (x, y)
-            else:
-                self.active_local_board = None
+            self.active_local_board = None
 
         if move == mark:
             global_move = self.global_proxy_board.move_and_check(current_board_x, current_board_y, mark)
