@@ -1,2 +1,2 @@
 # tic-tac
-A simple game of Tic Tac Toe
+Simple and Ultimate Tic-Tac-Toe with GUI and command line implementations
