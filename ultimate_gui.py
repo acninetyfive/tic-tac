@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import time
 from ultimate_engine import UltimateGame
 from player import GUIHuman, RandomComputer
 
@@ -16,8 +17,8 @@ if __name__ == "__main__":
 
     p1 = GUIHuman("Gabe", "X", window)
     # p1 = RandomComputer("Computer1", "X", "ultimate")
-    # p2 = GUIHuman("Shannon", "O", window)
-    p2 = RandomComputer("Computer", "O", "ultimate")
+    p2 = GUIHuman("Shannon", "O", window)
+    # p2 = RandomComputer("Computer", "O", "ultimate")
 
     color_dict = {"X": "red", "O": "green"}
 
@@ -28,13 +29,19 @@ if __name__ == "__main__":
         input()
 
     while True:
+        #time.sleep(.5)
         curr_move, curr_mark = game.take_turn()
 
         window[curr_move].update(game.get_board().get_global_board()[curr_move[0] // 3][curr_move[0] % 3]
                                  .get_board()[curr_move[1]][curr_move[2]], button_color=('black', 'white'))
 
-        if game.get_board().get_global_board()[curr_move[1]][curr_move[2]] == curr_mark:
-            window[(curr_move[1], curr_move[2])].update(background_color=color_dict[curr_mark])
+        if game.get_board().get_global_board()[curr_move[0] // 3][curr_move[0] % 3].get_status() == curr_mark:
+            window[(curr_move[0] % 3, curr_move[0] // 3)].update("WON BY {}".format(curr_mark))
+        elif game.get_board().get_global_board()[curr_move[0] // 3][curr_move[0] % 3].get_status() == "draw":
+            window[(curr_move[0] % 3, curr_move[0] // 3)].update("DRAWN GAME")
+
+
+        window.finalize()
 
         if game.get_result() is not None:
             break
