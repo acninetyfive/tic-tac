@@ -1,4 +1,4 @@
-from tic_tac_board import TicTacBoard
+from simple_board import TicTacBoard
 
 
 class UltimateBoard:
