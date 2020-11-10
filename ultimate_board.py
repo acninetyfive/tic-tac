@@ -11,6 +11,7 @@ class UltimateBoard:
         self.global_proxy_board = TicTacBoard("Global Proxy")
         self.active_local_board = None
         self.status = None
+        self.moves = []
 
     def move_and_check(self, b: int, x: int, y: int, mark: str):
         current_board_x = b // 3
@@ -26,6 +27,8 @@ class UltimateBoard:
         if move == "invalid":
             return "invalid"
 
+        self.moves.append((b, x, y, self.active_local_board))
+
         if self.global_board[x][y].get_status() is None:
             self.active_local_board = (x, y)
         else:
@@ -36,14 +39,28 @@ class UltimateBoard:
             if global_move == mark:
                 self.status = mark
                 return mark
+            elif global_move == "draw":
+                self.status = "draw"
+                return "draw"
 
-        for i in range(3):
-            for j in range(3):
-                if self.global_board[i][j].get_status() is None:
-                    return "valid"
+        elif move == "draw":
+            global_move = self.global_proxy_board.move_and_check(current_board_x, current_board_y, "D")
+            if global_move == "draw":
+                self.status = "draw"
+                return "draw"
 
-        self.status = "draw"
-        return "draw"
+        return "valid"
+
+    def undo_last_move(self):
+        last_move = self.moves.pop()
+        current_board_x = last_move[0] // 3
+        current_board_y = last_move[0] % 3
+        self.active_local_board = last_move[3]
+
+        if self.global_proxy_board.get_status() is not None:
+            self.global_proxy_board.undo_last_move()
+            self.status = None
+        self.global_board[current_board_x][current_board_y].undo_last_move()
 
     def get_global_board(self):
         return self.global_board

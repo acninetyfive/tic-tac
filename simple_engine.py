@@ -46,6 +46,11 @@ class SimpleGame:
 
         return move, self.players[self.active_player].get_mark()
 
+    def undo_turn(self):
+        self.board.undo_last_move()
+        self.active_player = (self.active_player + 1) % 2
+        self.move_counter -= 1
+
     def get_board(self):
         return self.board
 
@@ -70,3 +75,6 @@ if __name__ == '__main__':
 
     while game.get_result() is None:
         game.take_turn()
+        test = input()
+        if test == "undo":
+            game.undo_turn()

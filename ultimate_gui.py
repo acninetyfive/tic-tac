@@ -29,7 +29,6 @@ if __name__ == "__main__":
         input()
 
     while True:
-        #time.sleep(.5)
         curr_move, curr_mark = game.take_turn()
 
         window[curr_move].update(game.get_board().get_global_board()[curr_move[0] // 3][curr_move[0] % 3]
@@ -39,7 +38,6 @@ if __name__ == "__main__":
             window[(curr_move[0] % 3, curr_move[0] // 3)].update("WON BY {}".format(curr_mark))
         elif game.get_board().get_global_board()[curr_move[0] // 3][curr_move[0] % 3].get_status() == "draw":
             window[(curr_move[0] % 3, curr_move[0] // 3)].update("DRAWN GAME")
-
 
         window.finalize()
 
