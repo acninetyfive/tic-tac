@@ -10,6 +10,8 @@ class SimpleGame:
         self.active_player = 0
         self.move_counter = 0
         self.result = None
+        for player in self.players:
+            player.set_moves_list(self.board.get_moves())
 
         if self.verbose:
             print(self.move_counter)
@@ -73,8 +75,13 @@ if __name__ == '__main__':
 
     game = SimpleGame([a, b])
 
+    # a.set_moves_list(game.get_board().get_moves())
+    # b.set_moves_list(game.get_board().get_moves())
+
     while game.get_result() is None:
         game.take_turn()
         test = input()
         if test == "undo":
             game.undo_turn()
+        if test == "m":
+            print(a.get_moves_list())

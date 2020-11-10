@@ -10,6 +10,8 @@ class UltimateGame:
         self.active_player = 0
         self.move_counter = 0
         self.result = None
+        for player in self.players:
+            player.set_moves_list(self.board.get_moves())
 
         if self.verbose:
             print(self.move_counter)
@@ -55,6 +57,9 @@ class UltimateGame:
         self.active_player = (self.active_player + 1) % 2
         self.move_counter -= 1
 
+    def set_board(self, board):
+        self.board = board
+
     def get_board(self):
         return self.board
 
@@ -72,6 +77,7 @@ class UltimateGame:
 
 
 if __name__ == '__main__':
+
     a = RandomComputer("Computer_X", "X", "ultimate")
     b = RandomComputer("Computer_O", "O", "ultimate")
 
@@ -82,3 +88,5 @@ if __name__ == '__main__':
         test = input()
         if test == "undo":
             game.undo_turn()
+        if test == "m":
+            print(a.get_moves_list())

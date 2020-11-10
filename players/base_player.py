@@ -3,6 +3,7 @@ class Player:
         self.name = name
         self.mark = mark
         self.game = game
+        self.moves_list = None
 
     def get_name(self):
         return self.name
@@ -15,3 +16,9 @@ class Player:
 
     def get_move(self):
         pass
+
+    def get_moves_list(self):
+        return self.moves_list
+
+    def set_moves_list(self, moves_list):
+        self.moves_list = moves_list

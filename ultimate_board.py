@@ -74,6 +74,9 @@ class UltimateBoard:
     def get_global_proxy_board(self):
         return self.global_proxy_board
 
+    def get_moves(self):
+        return self.moves
+
     def __str__(self):
         return "\n################\n".join(
             ["\n".join(
