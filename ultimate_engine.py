@@ -1,3 +1,4 @@
+from players.pure_monte_carlo_player import PureMonteCarlo
 from ultimate_board import UltimateBoard
 from players.random_computer_player import RandomComputer
 
@@ -17,11 +18,15 @@ class UltimateGame:
             print(self.move_counter)
             print(self.board)
 
-    def take_turn(self):
-        move = self.players[self.active_player].get_move()
+    def take_turn(self, move=None):
+        faux_move = move is not None  # True if move is being made by ai internally, not in actual game
+        if not faux_move:
+            move = self.players[self.active_player].get_move()
         status = self.board.move_and_check(move[0], move[1], move[2],
                                            self.players[self.active_player].get_mark())
         while status == "invalid":
+            if faux_move:
+                return status, self.players[self.active_player].get_mark()
             if self.verbose:
                 pass
                 # print("Invalid move")
@@ -56,6 +61,7 @@ class UltimateGame:
         self.board.undo_last_move()
         self.active_player = (self.active_player + 1) % 2
         self.move_counter -= 1
+        self.result = self.board.get_status()
 
     def set_board(self, board):
         self.board = board
@@ -78,15 +84,22 @@ class UltimateGame:
 
 if __name__ == '__main__':
 
-    a = RandomComputer("Computer_X", "X", "ultimate")
-    b = RandomComputer("Computer_O", "O", "ultimate")
+    # p1 = GUIHuman("Gabe", "X", window)
+    p1 = RandomComputer("Random", "X", "ultimate")
+    # p2 = GUIHuman("Shannon", "O", window)
+    p2 = PureMonteCarlo("Monte", "O", "ultimate")
 
-    game = UltimateGame([a, b])
+    symbol_dict = {"X": "Random", "O": "Monte", "draw": "DRAW"}
+
+    players = [p1, p2]
+
+    game = UltimateGame(players, False)
+
+    p2.set_engine(game)
 
     while game.get_result() is None:
         turn = game.take_turn()
-        test = input()
-        if test == "undo":
-            game.undo_turn()
-        if test == "m":
-            print(a.get_moves_list())
+        print(game.get_board().get_global_proxy_board())
+        print()
+
+    print("RESULT:", symbol_dict[game.get_result()])

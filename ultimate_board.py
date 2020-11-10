@@ -57,7 +57,7 @@ class UltimateBoard:
         current_board_y = last_move[0] % 3
         self.active_local_board = last_move[3]
 
-        if self.global_proxy_board.get_status() is not None:
+        if self.global_board[current_board_x][current_board_y].get_status() is not None:
             self.global_proxy_board.undo_last_move()
             self.status = None
         self.global_board[current_board_x][current_board_y].undo_last_move()
