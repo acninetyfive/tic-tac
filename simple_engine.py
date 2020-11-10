@@ -1,5 +1,5 @@
 from simple_board import TicTacBoard
-from player import CommandLineHuman, RandomComputer
+from players.random_computer_player import RandomComputer
 
 
 class SimpleGame:

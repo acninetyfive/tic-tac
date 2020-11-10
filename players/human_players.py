@@ -1,38 +1,6 @@
 import PySimpleGUI as sg
-import random
 
-
-class Player:
-    def __init__(self, name, mark, game="basic"):
-        self.name = name
-        self.mark = mark
-        self.game = game
-
-    def get_name(self):
-        return self.name
-
-    def get_mark(self):
-        return self.mark
-
-    def set_mark(self, mark):
-        self.mark = mark
-
-    def get_move(self):
-        pass
-
-
-class RandomComputer(Player):
-    def __init__(self, name, mark, game="basic"):
-        super().__init__(name, mark, game)
-
-    def get_move(self):
-        x = random.randrange(3)
-        y = random.randrange(3)
-        if self.game == "basic":
-            return (x, y)
-        elif self.game == "ultimate":
-            b = random.randrange(9)
-            return (b, x, y)
+from players.base_player import Player
 
 
 class CommandLineHuman(Player):

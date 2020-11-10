@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 from simple_engine import SimpleGame
-from player import Player, RandomComputer, GUIHuman
+from players.random_computer_player import RandomComputer
+from players.human_players import GUIHuman
 
 if __name__ == '__main__':
 

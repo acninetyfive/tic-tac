@@ -1,5 +1,5 @@
 from ultimate_board import UltimateBoard
-from player import CommandLineHuman, RandomComputer
+from players.random_computer_player import RandomComputer
 
 
 class UltimateGame:

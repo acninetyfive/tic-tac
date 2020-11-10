@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
-import time
 from ultimate_engine import UltimateGame
-from player import GUIHuman, RandomComputer
+from players.human_players import GUIHuman
 
 if __name__ == "__main__":
     frame_layouts = [[[sg.Button('', size=(6, 3), key=(k, i, j), pad=(1, 1))
