@@ -8,48 +8,33 @@ if __name__ == "__main__":
 
     p1 = RandomComputer("Random", "X", "ultimate")
     # p2 = RandomComputer("Random2", "O", "ultimate")
-    p2 = PureMonteCarlo("Monte", "O", 1, "ultimate")
+    p2 = PureMonteCarlo("Monte", "O", 10, "ultimate")
 
     symbol_dict = {p1.get_mark(): p1.get_name(), p2.get_mark(): p2.get_name(), "draw": "DRAW"}
 
-    players = [p2, p1]
+    players = [p1, p2]
 
     results = [0, 0, 0]
 
     for i in range(games):
-        game = UltimateGame(players, False)
+        game = UltimateGame([players[i % 2], players[(i + 1) % 2]], False)
 
         p2.set_engine(game)
 
-        game_file = open("game_file.txt", "w")
         j = 0
         while game.get_result() is None:
-            # print("pre_turn")
-            # print()
             turn = game.take_turn()
-            # print(game.get_move_counter())
-            # print(game.get_board())
-            # game_file.write("\npre board print\n")
-            # game_file.write(str(game.get_board()))
-            # game_file.write("\n\n")
-            # print("pre global proxy print")
-            # game_file.write(str(game.get_board().get_global_proxy_board()))
-            # game_file.write("\n\n")
-            # game_file.write(str(game.get_board().get_moves()[-1]))
-            # game_file.write("\n\n\n")
-            # print("file wrote", i)
-            j += 1
-            # print(game.get_board().get_global_proxy_board())
-            # print()
 
         print("RESULT:", symbol_dict[game.get_result()])
-        game_file.close()
         remove("game_file.txt")
-        if game.get_result() == "X":
+        if game.get_result() == p1.get_mark():
             results[0] += 1
-        elif game.get_result() == "O":
+        elif game.get_result() == p2.get_mark():
             results[1] += 1
         elif game.get_result() == "draw":
             results[2] += 1
 
-    print(results)
+    print()
+    print(p1.get_name(), results[0])
+    print(p2.get_name(), results[1])
+    print("draw", results[2])

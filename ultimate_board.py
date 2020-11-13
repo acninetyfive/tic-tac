@@ -94,9 +94,3 @@ class UltimateBoard:
             [x.__eq__(y) for x, y in zip(
                 chain.from_iterable([self.global_board[i] for i in range(3)]),
                 chain.from_iterable([obj.get_global_board()[j] for j in range(3)]))])
-
-
-if __name__ == '__main__':
-    ub = UltimateBoard()
-    print(ub.move_and_check(4, 1, 1, "X"))
-    print(ub)
