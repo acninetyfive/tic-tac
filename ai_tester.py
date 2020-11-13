@@ -6,9 +6,10 @@ from os import remove
 if __name__ == "__main__":
     games = 100
 
-    p1 = RandomComputer("Random", "X", "ultimate")
+    # p1 = RandomComputer("Random", "X", "ultimate")
+    p1 = PureMonteCarlo("Monte-5", "X", 10, "ultimate")
     # p2 = RandomComputer("Random2", "O", "ultimate")
-    p2 = PureMonteCarlo("Monte", "O", 10, "ultimate")
+    p2 = PureMonteCarlo("Monte-10", "O", 10, "ultimate")
 
     symbol_dict = {p1.get_mark(): p1.get_name(), p2.get_mark(): p2.get_name(), "draw": "DRAW"}
 
@@ -26,7 +27,6 @@ if __name__ == "__main__":
             turn = game.take_turn()
 
         print("RESULT:", symbol_dict[game.get_result()])
-        remove("game_file.txt")
         if game.get_result() == p1.get_mark():
             results[0] += 1
         elif game.get_result() == p2.get_mark():
