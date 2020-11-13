@@ -46,7 +46,7 @@ class PureMonteCarlo(Player):
         best_moves = filter(lambda m: m[1] == best_val, all_move_values.items())
 
         if before_board != self.engine.get_board():
-            print("Rewind Failure")
+            raise ValueError("Board not in original state, rewind failure")
             exit()
         print(all_move_values)
         print(best_val)
