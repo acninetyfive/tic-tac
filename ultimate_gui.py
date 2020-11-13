@@ -17,10 +17,10 @@ if __name__ == "__main__":
     game_name = "Ultimate Tic-Tac-Toe"
     window = sg.Window(game_name, layout, background_color="BLACK")
 
-    # p1 = GUIHuman("Gabe", "X", window)
-    p1 = RandomComputer("Random", "X", "ultimate")
+    p1 = GUIHuman("Gabe", "X", window)
+    # p1 = RandomComputer("Random", "X", "ultimate")
     # p2 = GUIHuman("Shannon", "O", window)
-    p2 = PureMonteCarlo("Monte", "O", 100, "ultimate")
+    p2 = PureMonteCarlo("Monte", "O", 2, "ultimate")
 
     symbol_dict = {p1.get_mark(): p1.get_name(), p2.get_mark(): p2.get_name(), "draw": "DRAW"}
 

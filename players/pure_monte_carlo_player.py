@@ -1,6 +1,7 @@
 import random
 from players.base_player import Player
 from copy import deepcopy
+from operator import itemgetter
 
 
 class PureMonteCarlo(Player):
@@ -20,37 +21,36 @@ class PureMonteCarlo(Player):
                 return (b, x, y)
 
         before_board = deepcopy(self.engine.get_board())
-        before_moves = self.engine.get_move_counter()
 
         active_local_board = self.engine.get_board().get_active_local_board()
 
-        best_moves = None
-        best_val = None
         all_move_values = {}
-        for x in range(3):
-            for y in range(3):
-                if active_local_board is not None:
-                    active_board_to_int = 3 * active_local_board[0] + active_local_board[1]
-                    b_range = range(active_board_to_int, active_board_to_int + 1)
-                else:
-                    b_range = range(9)
+        for r in range(self.number_of_runs):
+            for x in range(3):
+                for y in range(3):
+                    if active_local_board is not None:
+                        active_board_to_int = 3 * active_local_board[0] + active_local_board[1]
+                        b_range = range(active_board_to_int, active_board_to_int + 1)
+                    else:
+                        b_range = range(9)
 
-                for b in b_range:
-                    val = self.monte_carlo(b, x, y)
-                    all_move_values[(b, x, y)] = val
-                    if best_moves is None:
-                        best_moves = [(b, x, y)]
-                        best_val = val
-                    elif val > best_val:
-                        best_moves = [(b, x, y)]
-                        best_val = val
-                    elif val == best_val:
-                        best_moves.append((b, x, y))
+                    for b in b_range:
+                        val = self.monte_carlo(b, x, y)
+                        if (b, x, y) not in all_move_values:
+                            all_move_values[(b, x, y)] = val
+                        else:
+                            old_avg = all_move_values[(b, x, y)]
+                            all_move_values[(b, x, y)] = (val - old_avg)/(r+1)
+
+        best_val = max(all_move_values.values())
+        best_moves = filter(lambda m: m[1] == best_val, all_move_values.items())
+
         if before_board != self.engine.get_board():
             print("Rewind Failure")
             exit()
-
-        return random.choice(best_moves)
+        print(all_move_values)
+        print(best_val)
+        return random.choice(list(best_moves))[0]
 
     def monte_carlo(self, b, x, y):
         result = self.engine.take_turn((b, x, y))
@@ -63,16 +63,14 @@ class PureMonteCarlo(Player):
             self.rewind_game(1)
             return 0
 
-        wins = 0
-        for _ in range(self.number_of_runs):
-            result, moves = self.random_runout()
-            if result == self.mark:
-                wins += 1
-            self.rewind_game(moves)
+        win = 0
+        result, moves = self.random_runout()
+        if result == self.mark:
+            win = 1
+        self.rewind_game(moves + 1)
+        # self.rewind_game(1)
 
-        self.rewind_game(1)
-
-        return wins/self.number_of_runs
+        return win
 
     def random_runout(self):
         runout_move_counter = 0
