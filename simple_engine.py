@@ -1,4 +1,4 @@
-from simple_board import TicTacBoard
+from simple_board import SimpleBoard
 from players.random_computer_player import RandomComputer
 
 
@@ -6,7 +6,7 @@ class SimpleGame:
     def __init__(self, players, verbose=True, name="Tic-Tac-Toe"):
         self.players = players
         self.verbose = verbose
-        self.board = TicTacBoard(name)
+        self.board = SimpleBoard(name)
         self.active_player = 0
         self.move_counter = 0
         self.result = None

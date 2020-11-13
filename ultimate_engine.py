@@ -19,6 +19,7 @@ class UltimateGame:
             print(self.board)
 
     def take_turn(self, move=None):
+        # print("pre turn move counter", self.move_counter)
         faux_move = move is not None  # True if move is being made by ai internally, not in actual game
         if not faux_move:
             move = self.players[self.active_player].get_move()
@@ -26,7 +27,13 @@ class UltimateGame:
                                            self.players[self.active_player].get_mark())
         while status == "invalid":
             if faux_move:
+                # print("faux invalid", move)
+                # print(self.board)
                 return status, self.players[self.active_player].get_mark()
+            else:
+                pass
+                # print("true invalid", self.players[self.active_player].get_name(), move)
+                # print(self.board)
             if self.verbose:
                 pass
                 # print("Invalid move")
@@ -37,7 +44,11 @@ class UltimateGame:
         if status != "valid":
             self.result = status
 
+        # if not faux_move:
+        #    print("move", move)
+
         self.move_counter += 1
+        # print("post turn move counter", self.move_counter)
 
         if self.verbose:
             print(self.move_counter)
@@ -62,6 +73,7 @@ class UltimateGame:
         self.active_player = (self.active_player + 1) % 2
         self.move_counter -= 1
         self.result = self.board.get_status()
+        # print("turn undone, new counter:", self.move_counter)
 
     def set_board(self, board):
         self.board = board
@@ -87,7 +99,7 @@ if __name__ == '__main__':
     # p1 = GUIHuman("Gabe", "X", window)
     p1 = RandomComputer("Random", "X", "ultimate")
     # p2 = GUIHuman("Shannon", "O", window)
-    p2 = PureMonteCarlo("Monte", "O", "ultimate")
+    p2 = PureMonteCarlo("Monte", "O", 10, "ultimate")
 
     symbol_dict = {"X": "Random", "O": "Monte", "draw": "DRAW"}
 

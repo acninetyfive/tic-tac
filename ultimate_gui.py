@@ -20,9 +20,9 @@ if __name__ == "__main__":
     # p1 = GUIHuman("Gabe", "X", window)
     p1 = RandomComputer("Random", "X", "ultimate")
     # p2 = GUIHuman("Shannon", "O", window)
-    p2 = PureMonteCarlo("Monte", "O", "ultimate")
+    p2 = PureMonteCarlo("Monte", "O", 100, "ultimate")
 
-    symbol_dict = {"X": "Random", "O": "Monte", "draw": "DRAW"}
+    symbol_dict = {p1.get_mark(): p1.get_name(), p2.get_mark(): p2.get_name(), "draw": "DRAW"}
 
     players = [p1, p2]
     game = UltimateGame(players, False)

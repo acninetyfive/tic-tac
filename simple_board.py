@@ -1,4 +1,4 @@
-class TicTacBoard:
+class SimpleBoard:
 
     def __init__(self, name: str = "Tic-Tac-Toe"):
         self.name = name
@@ -9,6 +9,9 @@ class TicTacBoard:
         self.moves = []
 
     def move_and_check(self, x: int, y: int, mark: str) -> str:
+        if self.status is not None:
+            return "invalid"
+
         if self.board[x][y] != " ":
             return "invalid"
 
@@ -62,3 +65,6 @@ class TicTacBoard:
 
     def __str__(self):
         return "|".join(self.board[0]) + "\n" + "|".join(self.board[1]) + "\n" + "|".join(self.board[2])
+
+    def __eq__(self, obj):
+        return isinstance(obj, SimpleBoard) and self.board == obj.board

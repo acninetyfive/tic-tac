@@ -1,4 +1,6 @@
-from simple_board import TicTacBoard
+from itertools import chain
+
+from simple_board import SimpleBoard
 
 
 class UltimateBoard:
@@ -7,8 +9,8 @@ class UltimateBoard:
         local_board_names = [["Top Left", "Top Middle", "Top Right"],
                              ["Middle Left", "Middle Middle", "Middle Right"],
                              ["Bottom Right", "Bottom Middle", "Bottom Right"]]
-        self.global_board = [[TicTacBoard(local_board_names[i][j]) for i in range(3)] for j in range(3)]
-        self.global_proxy_board = TicTacBoard("Global Proxy")
+        self.global_board = [[SimpleBoard(local_board_names[i][j]) for i in range(3)] for j in range(3)]
+        self.global_proxy_board = SimpleBoard("Global Proxy")
         self.active_local_board = None
         self.status = None
         self.moves = []
@@ -86,6 +88,12 @@ class UltimateBoard:
                     ) for i in range(3)]
                 ) for j in range(3)]
             ) for k in range(3)])
+
+    def __eq__(self, obj):
+        return isinstance(obj, UltimateBoard) and all(
+            [x.__eq__(y) for x, y in zip(
+                chain.from_iterable([self.global_board[i] for i in range(3)]),
+                chain.from_iterable([obj.get_global_board()[j] for j in range(3)]))])
 
 
 if __name__ == '__main__':
