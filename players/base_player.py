@@ -4,6 +4,7 @@ class Player:
         self.mark = mark
         self.game = game
         self.moves_list = None
+        self.engine = None
 
     def get_name(self):
         return self.name
@@ -22,3 +23,9 @@ class Player:
 
     def set_moves_list(self, moves_list):
         self.moves_list = moves_list
+
+    def set_engine(self, engine):
+        self.engine = engine
+
+    def get_engine(self):
+        return self.engine

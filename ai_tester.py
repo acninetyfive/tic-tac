@@ -4,7 +4,7 @@ from players.pure_monte_carlo_player import PureMonteCarlo
 from os import remove
 
 if __name__ == "__main__":
-    games = 100
+    games = 50
 
     # p1 = RandomComputer("Random", "X", "ultimate")
     p1 = PureMonteCarlo("Monte-5", "X", 10, "ultimate")
@@ -20,6 +20,7 @@ if __name__ == "__main__":
     for i in range(games):
         game = UltimateGame([players[i % 2], players[(i + 1) % 2]], False)
 
+        p1.set_engine(game)
         p2.set_engine(game)
 
         j = 0

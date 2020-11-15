@@ -7,7 +7,6 @@ from operator import itemgetter
 class PureMonteCarlo(Player):
     def __init__(self, name, mark, number_of_runs=10, game="basic"):
         super().__init__(name, mark, game)
-        self.engine = None
         self.number_of_runs = number_of_runs
 
     def get_move(self):
@@ -48,8 +47,6 @@ class PureMonteCarlo(Player):
         if before_board != self.engine.get_board():
             raise ValueError("Board not in original state, rewind failure")
             exit()
-        print(all_move_values)
-        print(best_val)
         return random.choice(list(best_moves))[0]
 
     def monte_carlo(self, b, x, y):
@@ -97,9 +94,3 @@ class PureMonteCarlo(Player):
         else:
             b = 3 * active_local_board[0] + active_local_board[1]
         return (b, x, y)
-
-    def set_engine(self, engine):
-        self.engine = engine
-
-    def get_engine(self):
-        return self.engine
